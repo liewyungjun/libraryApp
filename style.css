@@ -118,3 +118,15 @@ h1 {
 .notRead {
   background-color: red;
 }
+#reset {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+#save {
+  float: right;
+}
+.topButtons {
+  padding: 10px;
+  background-color: rgb(250, 229, 232);
+  border-radius: 5px;
+}
