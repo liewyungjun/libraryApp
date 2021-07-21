@@ -26,6 +26,14 @@ function createLibrary() {
     if (document.getElementById(a.title)) {
       return;
     }
+    let container = document.createElement("div");
+    container.setAttribute("id", "bookContainer");
+    // let remove = document.createElement("div");
+
+    let remove = document.createElement("img");
+    remove.src = "./outline_close_black_24dp.png";
+    remove.classList.add("removeButton");
+    remove.setAttribute("data", `${a.title}`);
     let div = document.createElement("div");
     div.textContent = a.title;
     div.classList.add("book");
@@ -33,8 +41,23 @@ function createLibrary() {
     let R = Math.floor(Math.random() * 255);
     let G = Math.floor(Math.random() * 255);
     let B = Math.floor(Math.random() * 255);
-    div.style.borderColor = `rgb(${R},${G},${B})`;
-    document.getElementById("libraryContainer").appendChild(div);
+    container.style.borderColor = `rgb(${R},${G},${B})`;
+    container.addEventListener("mouseover", () => {
+      remove.style.display = "block";
+    });
+    container.addEventListener("mouseleave", () => {
+      remove.style.display = "none";
+    });
+    container.appendChild(remove);
+    container.appendChild(div);
+    remove.addEventListener("click", () => {
+      // deleteBook();
+      let index = myLibrary.indexOf(a);
+      myLibrary.splice(index, 1);
+      console.log(myLibrary);
+      container.remove();
+    });
+    document.getElementById("libraryContainer").appendChild(container);
   });
 }
 
@@ -42,10 +65,21 @@ function openForm() {
   document.getElementById("myForm").style.display = "block";
 }
 function added() {
+  let alreadyAdded = false;
   document.getElementById("myForm").style.display = "none";
   let newBook = document.forms["myForm"]["bookTitle"].value;
   if (!newBook) {
     alert("You didn't enter a book !");
+    return;
+  }
+  myLibrary.forEach((a) => {
+    if (a.title == newBook) {
+      alert("You already have this book!");
+      alreadyAdded = true;
+      return;
+    }
+  });
+  if (alreadyAdded) {
     return;
   }
   let newAuthor = document.forms["myForm"]["author"].value;
@@ -53,13 +87,20 @@ function added() {
   let newRead = document.forms["myForm"]["read"].value;
   let babi = new Book(newBook, newAuthor, newLength, newRead);
   myLibrary.push(babi);
+  document.forms["myForm"]["bookTitle"].value = "";
+  document.forms["myForm"]["author"].value = "";
+  document.forms["myForm"]["length"].value = "";
+  document.forms["myForm"]["read"].value = "";
+  console.log(myLibrary);
   createLibrary();
   //document.getElementByName("myForm").reset();
 }
 function closeForm() {
   document.getElementById("myForm").style.display = "none";
 }
-
+function deleteBook() {
+  console.log(this);
+}
 const Hobbit = new Book(
   "The Hobbit",
   "J.R. Tolkien",

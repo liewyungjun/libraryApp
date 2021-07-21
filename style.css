@@ -8,15 +8,15 @@ h1 {
   display: flex;
   gap: 20px 15px;
 }
-.book {
+#bookContainer {
   display: flex;
+  position: relative;
   justify-content: center;
   align-items: center;
   min-width: 75px;
   max-width: 75px;
   height: 100px;
   border: solid;
-  padding: 20px;
 }
 /* Button used to open the contact form - fixed at the bottom of the page */
 .open-button {
@@ -88,4 +88,13 @@ h1 {
 .form-container .btn:hover,
 .open-button:hover {
   opacity: 1;
+}
+
+.removeButton {
+  display: none;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  right: 0px;
+  top: 0px;
 }
