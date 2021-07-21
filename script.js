@@ -23,6 +23,7 @@ function Book(title, author, pages, read) {
 
 function createLibrary() {
   myLibrary.forEach((a) => {
+    let index = myLibrary.indexOf(a);
     if (document.getElementById(a.title)) {
       return;
     }
@@ -41,18 +42,33 @@ function createLibrary() {
     let R = Math.floor(Math.random() * 255);
     let G = Math.floor(Math.random() * 255);
     let B = Math.floor(Math.random() * 255);
-    container.style.borderColor = `rgb(${R},${G},${B})`;
+    container.style.backgroundColor = `rgb(${R},${G},${B})`;
     container.addEventListener("mouseover", () => {
       remove.style.display = "block";
     });
     container.addEventListener("mouseleave", () => {
       remove.style.display = "none";
     });
+    let status = document.createElement("button");
+    status.innerHTML = "Read";
+    status.classList.add("read");
+    status.classList.add("readIndicator");
+    status.addEventListener("click", () => {
+      status.classList.toggle("read");
+      status.classList.toggle("notRead");
+      if (status.classList.contains("read")) {
+        a.read = "read";
+        status.innerHTML = "Read";
+      } else if (status.classList.contains("notRead")) {
+        a.read = "not read";
+        status.innerHTML = "Not Read";
+      }
+    });
     container.appendChild(remove);
     container.appendChild(div);
+    container.appendChild(status);
     remove.addEventListener("click", () => {
       // deleteBook();
-      let index = myLibrary.indexOf(a);
       myLibrary.splice(index, 1);
       console.log(myLibrary);
       container.remove();

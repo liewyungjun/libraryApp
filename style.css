@@ -8,14 +8,23 @@ h1 {
   display: flex;
   gap: 20px 15px;
 }
+.book {
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  background-color: white;
+  border: solid;
+  border-width: thin;
+}
 #bookContainer {
   display: flex;
+  flex-wrap: wrap;
   position: relative;
   justify-content: center;
   align-items: center;
-  min-width: 75px;
-  max-width: 75px;
-  height: 100px;
+  min-width: 150px;
+  max-width: 150px;
+  height: 200px;
   border: solid;
 }
 /* Button used to open the contact form - fixed at the bottom of the page */
@@ -97,4 +106,15 @@ h1 {
   height: 20px;
   right: 0px;
   top: 0px;
+}
+.readIndicator {
+  padding: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+.read {
+  background-color: lightgreen;
+}
+.notRead {
+  background-color: red;
 }
