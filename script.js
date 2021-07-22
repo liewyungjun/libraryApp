@@ -21,7 +21,6 @@ function Book(title, author, pages, read) {
 
 function createLibrary() {
   myLibrary.forEach((a) => {
-    let index = myLibrary.indexOf(a);
     if (document.getElementById(a.title)) {
       return;
     }
@@ -73,8 +72,11 @@ function createLibrary() {
     container.appendChild(status);
     remove.addEventListener("click", () => {
       // deleteBook();
-      myLibrary.splice(index, 1);
+      let data = remove.getAttribute("data");
+      console.log(data);
+      myLibrary = myLibrary.filter((boook) => boook.title != data);
       container.remove();
+      console.log(myLibrary);
     });
     document.getElementById("libraryContainer").appendChild(container);
   });
@@ -119,16 +121,33 @@ function closeForm() {
 }
 function populateStorage() {
   localStorage.clear();
-  localStorage.setItem("myLibrary", myLibrary);
-  console.log(localStorage.getItem("myLibrary"));
+  let len = myLibrary.length;
+  for (let i = 0; i < len; i++) {
+    localStorage.setItem(`itemTitle ${i}`, myLibrary[i].title);
+    localStorage.setItem(`itemAuthor ${i}`, myLibrary[i].author);
+    localStorage.setItem(`itemLength ${i}`, myLibrary[i].pages);
+    localStorage.setItem(`itemRead ${i}`, myLibrary[i].read);
+  }
+  alert("Saved!");
 }
-if (localStorage.getItem("myLibrary")) {
-  let myLibrary = localStorage.getItem("myLibrary");
-} else {
-  let myLibrary = [];
+let myLibrary = [];
+function obtainLocalStorage() {
+  for (let i = 0; i < localStorage.length / 4; i++) {
+    let x = new Book(
+      localStorage.getItem(`itemTitle ${i}`),
+      localStorage.getItem(`itemAuthor ${i}`),
+      localStorage.getItem(`itemLength ${i}`),
+      localStorage.getItem(`itemRead ${i}`)
+    );
+    myLibrary.push(x);
+  }
+}
+if (localStorage.length == 0) {
   const Hobbit = new Book("The Hobbit", "J.R. Tolkien", "299 pages", true);
   const StarWars = new Book("Star Wars", "George Lucas", "3000 pages", false);
   myLibrary.push(Hobbit);
   myLibrary.push(StarWars);
+} else {
+  obtainLocalStorage();
 }
 createLibrary();
